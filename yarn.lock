@@ -257,13 +257,6 @@
     "@types/express" "*"
     "@types/socket.io" "*"
 
-"@types/express-winston@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@types/express-winston/-/express-winston-4.0.0.tgz#d6d2adaf58bae0954f579e22d0860f086384fc48"
-  integrity sha512-CCNvkHIRKIJGgt64naW7XvsXvw4NkVHHa3EDy63uZzruXaFhZb2+AE0HRZx90ph528D1gm+fx9dA1gmZZ2uzLw==
-  dependencies:
-    express-winston "*"
-
 "@types/express@*":
   version "4.17.1"
   resolved "https://registry.yarnpkg.com/@types/express/-/express-4.17.1.tgz#4cf7849ae3b47125a567dfee18bfca4254b88c5c"
@@ -1552,18 +1545,10 @@ express-status-monitor@^1.2.7:
     request "2.88.0"
     socket.io "2.3.0"
 
-express-winston@*:
+express-winston@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/express-winston/-/express-winston-4.0.1.tgz#98c74d099b9a7fdeedc56eb839c223968bc33990"
   integrity sha512-HQZ/d2UPuZIr/PNiLOHX+CF2Q9srfBy1GDK7yIJ+MvX6MU49ggM25XynSNmC5RRPlD2ju3Zic+mCTQtixP1gzQ==
-  dependencies:
-    chalk "^2.4.1"
-    lodash "^4.17.10"
-
-express-winston@^3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/express-winston/-/express-winston-3.4.0.tgz#8131822e0c9cbaa28d9600b5e866bd8edec1628b"
-  integrity sha512-CKo4ESwIV4BpNIsGVNiq2GcAwuomL4dVJRIIH/2K/jMpoRI2DakhkVTtaJACzV7n2I1v+knDJkkjZRCymJ7nmA==
   dependencies:
     chalk "^2.4.1"
     lodash "^4.17.10"

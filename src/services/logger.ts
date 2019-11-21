@@ -1,5 +1,5 @@
 import { ErrorRequestHandler, RequestHandler } from 'express'
-import expressWinston, { LoggerOptions } from 'express-winston'
+import * as expressWinston from 'express-winston'
 import winston from 'winston'
 import Rollbar from 'rollbar'
 
@@ -24,7 +24,7 @@ const logger = winston.createLogger({
 
 // * HTTP Logger & Error Logger Options
 
-const expressWinstonConfig: LoggerOptions = {
+const expressWinstonConfig: expressWinston.LoggerOptions = {
   level: 'info',
   transports: [new winston.transports.Console()],
   format: winston.format.combine(
