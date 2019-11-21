@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import admin from 'firebase-admin'
 import logger, { externalLogger } from '../services/logger'
+import { UserStats } from '../types/typings'
 
 export async function initUser(req: Request, res: Response) {
   const userId = req.userId
@@ -9,16 +10,23 @@ export async function initUser(req: Request, res: Response) {
     const user = await admin.auth().getUser(userId)
 
     if (user) {
-      const existingUserStats = await admin
+      const existingUserStats: UserStats = ((await admin
         .firestore()
         .collection('userstats')
         .doc(user.uid)
-        .get()
+        .get()) as unknown) as UserStats
+      const existingValues = {
+        wins: existingUserStats.wins,
+        losses: existingUserStats.losses,
+        meowpoints: existingUserStats.meowpoints,
+        uid: existingUserStats.uid,
+        displayName: existingUserStats.displayName,
+      }
       const newUserStats = {
         wins: 0,
         losses: 0,
         meowpoints: 0,
-        ...existingUserStats,
+        ...existingValues,
         uid: user.uid,
         displayName: user.displayName,
       }

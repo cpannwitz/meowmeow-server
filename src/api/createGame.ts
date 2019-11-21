@@ -4,7 +4,7 @@ import logger, { externalLogger } from '../services/logger'
 
 import uuid from 'uuid/v4'
 import { sendNotification } from '../services/pushNotifications'
-import { UserStats } from '../types/typings'
+// import { UserStats } from '../types/typings'
 import { getTimestamp } from '../functions/firebase'
 
 export async function createGame(req: Request, res: Response) {
@@ -24,10 +24,12 @@ export async function createGame(req: Request, res: Response) {
     const userRef = fs.collection('userstats').doc(userId)
     const guestRef = fs.collection('userstats').doc(guestId)
 
-    const userDoc = await userRef.get()
-    const userData: UserStats = userDoc.data() as UserStats
-    const guestDoc = await guestRef.get()
-    const guestData: UserStats = guestDoc.data() as UserStats
+    // const userDoc = await userRef.get()
+    // const userData: UserStats = userDoc.data() as UserStats
+    const userData = await admin.auth().getUser(userId)
+    // const guestDoc = await guestRef.get()
+    // const guestData: UserStats = guestDoc.data() as UserStats
+    const guestData = await admin.auth().getUser(guestId)
     const newLastActions = [
       {
         user: userId,
