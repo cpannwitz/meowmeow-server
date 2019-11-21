@@ -89,6 +89,11 @@ export async function matchActionPut(req: Request, res: Response) {
         preconditionToApply.enabled = false
         preconditionToApply.newColor = ''
       }
+      // handle 7's
+      if (gameObject.preCondition.toDraw > 0 && poppedCard.value === '7') {
+        preconditionToApply.enabled = true
+        preconditionToApply.toDraw = gameObject.preCondition.toDraw + 2
+      }
     } else {
       // handle application of preConditions
       // handle ace's
@@ -104,7 +109,7 @@ export async function matchActionPut(req: Request, res: Response) {
       // handle 7's
       if (poppedCard.value === '7') {
         preconditionToApply.enabled = true
-        preconditionToApply.toDraw = gameObject.preCondition.toDraw + 2
+        preconditionToApply.toDraw = 2
       }
     }
 
@@ -139,11 +144,11 @@ export async function matchActionPut(req: Request, res: Response) {
       newBatch.set(
         gameRef,
         {
+          lastActions: newLastActions,
           guestdeckLength: !userIsHost
             ? gameObject.guestdeckLength - 1
             : gameObject.guestdeckLength,
           hostdeckLength: userIsHost ? gameObject.hostdeckLength - 1 : gameObject.hostdeckLength,
-          lastActions: newLastActions,
           winner: userId,
           finished: true,
         },
