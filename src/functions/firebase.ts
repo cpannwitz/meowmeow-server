@@ -4,7 +4,8 @@ import { GameObject, CardObject } from '../types/typings'
 import logger from '../services/logger'
 
 export function getTimestamp() {
-  return (admin.firestore.FieldValue.serverTimestamp() as unknown) as string
+  return new Date().toISOString()
+  // return (admin.firestore.FieldValue.serverTimestamp() as unknown) as string
 }
 
 export function fetchGameObject(id: string) {
