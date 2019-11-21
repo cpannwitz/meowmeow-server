@@ -29,9 +29,7 @@ export async function matchActionTakeSuspension(req: Request, res: Response) {
       !(gameObject.preCondition.enabled && gameObject.preCondition.suspended)
     ) {
       logger.error('ERROR | Suspension-Action not allowed!')
-      return res
-        .status(406)
-        .json('Suspension-Action not allowed: Not your turn | Suspension not active')
+      return res.status(200).json(false)
     }
 
     newBatch.set(

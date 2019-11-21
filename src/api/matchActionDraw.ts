@@ -26,7 +26,7 @@ export async function matchActionDraw(req: Request, res: Response) {
     // check if action is allowed by game settings
     if (gameObject.whichTurn !== userId || gameObject.preCondition.suspended) {
       logger.error('ERROR | Draw-Action not allowed!')
-      return res.status(406).json('Draw-Action not allowed: Not your turn | Suspension active')
+      return res.status(200).json(false)
     }
 
     const fs = admin.firestore()

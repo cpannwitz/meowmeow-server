@@ -27,7 +27,7 @@ export async function matchActionPut(req: Request, res: Response) {
     // check if action is allowed by game settings
     if (gameObject.whichTurn !== userId) {
       logger.error('ERROR | Card-Action not allowed!')
-      return res.status(406).json('Card-Action not allowed: Not your turn')
+      return res.status(200).json(false)
     }
 
     if (!validateCardAction(card, pileDeck.pile[0], gameObject.preCondition)) {
@@ -43,7 +43,7 @@ export async function matchActionPut(req: Request, res: Response) {
           gameObject.preCondition.suspended ? 'true' : 'false'
         }|${gameObject.preCondition.toDraw}`
       )
-      return res.status(406).json(false)
+      return res.status(200).json(false)
     }
 
     const [userDeck, hostStats, guestStats] = await Promise.all([
@@ -91,6 +91,11 @@ export async function matchActionPut(req: Request, res: Response) {
       }
     } else {
       // handle application of preConditions
+      // handle ace's
+      if (poppedCard.value === 'ace') {
+        preconditionToApply.enabled = true
+        preconditionToApply.suspended = true
+      }
       // handle jacks
       if (poppedCard.value === 'jack' && jackWish) {
         preconditionToApply.enabled = true
