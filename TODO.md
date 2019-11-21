@@ -1,0 +1,1 @@
+- add rollbar to heroku, to enable deploy tracking (https://docs.rollbar.com/docs/heroku)

@@ -1,0 +1,5 @@
+/src/assets/**/*
+/src/components/AppInfo/USERCHANGELOG.mdx
+*.spec.*
+*.stories.*
+*.module.css
