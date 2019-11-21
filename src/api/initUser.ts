@@ -15,18 +15,10 @@ export async function initUser(req: Request, res: Response) {
         .collection('userstats')
         .doc(user.uid)
         .get()) as unknown) as UserStats
-      const existingValues = {
-        wins: existingUserStats.wins,
-        losses: existingUserStats.losses,
-        meowpoints: existingUserStats.meowpoints,
-        uid: existingUserStats.uid,
-        displayName: existingUserStats.displayName,
-      }
       const newUserStats = {
-        wins: 0,
-        losses: 0,
-        meowpoints: 0,
-        ...existingValues,
+        wins: existingUserStats.wins ?? 0,
+        losses: existingUserStats.losses ?? 0,
+        meowpoints: existingUserStats.meowpoints ?? 0,
         uid: user.uid,
         displayName: user.displayName,
       }
