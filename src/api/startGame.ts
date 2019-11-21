@@ -2,10 +2,10 @@ import { Request, Response } from 'express'
 import admin from 'firebase-admin'
 import logger, { externalLogger } from '../services/logger'
 import { sendNotification } from '../services/pushNotifications'
-import { CardObject } from '../types/typings'
 import gameConfig from '../configs/gameConfig'
-import { fetchGameObject, fetchCollection, getTimestamp } from '../functions/firebase'
+import { fetchGameObject, getTimestamp } from '../functions/firebase'
 import { shuffleArray } from '../functions/shuffleArray'
+import { cardsSet } from '../services/cardsSet'
 
 export async function startGame(req: Request, res: Response) {
   const userId: string = req.userId
@@ -20,12 +20,9 @@ export async function startGame(req: Request, res: Response) {
     const fs = admin.firestore()
 
     const gameRef = fs.collection('games').doc(gameId)
-    const cardsRef = fs.collection('cards')
 
-    const [gameObject, allCards] = await Promise.all([
-      fetchGameObject(gameId),
-      fetchCollection<CardObject>(cardsRef),
-    ])
+    const [gameObject] = await Promise.all([fetchGameObject(gameId)])
+    const allCards = [...cardsSet]
     const guestId = gameObject.guest.id
     const hostId = gameObject.host.id
     const newLastActions = gameObject.lastActions
@@ -66,6 +63,7 @@ export async function startGame(req: Request, res: Response) {
       },
       { merge: true }
     )
+    console.log(`LOG | : startGame -> pile`, pile)
     newBatch.set(decksRef.doc('pile'), {
       pile: pile,
     })

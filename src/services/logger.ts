@@ -35,7 +35,7 @@ const expressWinstonConfig: expressWinston.LoggerOptions = {
   meta: true, // optional: control whether you want to log the meta data about the request (default to true)
   expressFormat: true, // Use the default Express/morgan request formatting. Enabling this will override any msg if true. Will only output colors with colorize set to true
   colorize: true, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
-  ignoreRoute: function(req, res) {
+  ignoreRoute: function(req) {
     // optional: allows to skip some log messages based on request and/or response
     if (req.url.startsWith('/graphql')) return true
     if (req.url.startsWith('/stylesheets')) return true
@@ -46,6 +46,7 @@ const expressWinstonConfig: expressWinston.LoggerOptions = {
 // * External error logger
 
 const rollbar = new Rollbar({
+  enabled: systemConfig.isEnvProd(),
   accessToken: systemConfig.rollbarToken,
   captureUncaught: true,
   captureUnhandledRejections: true,
