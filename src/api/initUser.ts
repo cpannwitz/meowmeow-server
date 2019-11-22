@@ -15,6 +15,7 @@ export async function initUser(req: Request, res: Response) {
         .collection('userstats')
         .doc(user.uid)
         .get()) as unknown) as UserStats
+      logger.info(`LOG | : initUser -> existingUserStats`, existingUserStats)
       const newUserStats = {
         wins: existingUserStats.wins ?? 0,
         losses: existingUserStats.losses ?? 0,
