@@ -33,6 +33,7 @@
     "firebase-admin": "^8.8.0",
     "helmet": "^3.21.2",
     "morgan": "^1.9.1",
+    "pug": "^2.0.4",
     "rollbar": "^2.14.4",
     "serve-favicon": "^2.5.0",
     "uuid": "^3.3.3",

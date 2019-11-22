@@ -1,4 +1,4 @@
-import { Router, Request, Response } from 'express'
+import { Router, Response } from 'express'
 
 import { initUser } from './initUser'
 import { createGame } from './createGame'
@@ -12,7 +12,7 @@ import { testNotifications } from './testNotifications'
 
 const router = Router()
 
-router.get('/', (req: Request, res: Response) => {
+router.get('/', (_, res: Response) => {
   res.render('index', { title: 'MeowMeow' })
 })
 

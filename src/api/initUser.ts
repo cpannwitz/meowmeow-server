@@ -10,14 +10,7 @@ export async function initUser(req: Request, res: Response) {
     const user = await admin.auth().getUser(userId)
 
     if (user) {
-      // const existingUserStats: UserStats = ((await admin
-      //   .firestore()
-      //   .collection('userstats')
-      //   .doc(user.uid)
-      //   .get()) as unknown) as UserStats
-      // console.log(`LOG | : initUser -> existingUserStats`, existingUserStats)
       let existingUserStats: UserStats | undefined
-      console.log(`LOG | : initUser -> existingUserStats`, existingUserStats)
       await admin
         .firestore()
         .collection('userstats')
@@ -26,7 +19,6 @@ export async function initUser(req: Request, res: Response) {
         .then(doc => {
           existingUserStats = doc.data() as UserStats
         })
-      console.log(`LOG | : initUser -> existingUserStats`, existingUserStats)
       const newUserStats = {
         wins: existingUserStats?.wins ?? 0,
         losses: existingUserStats?.losses ?? 0,
@@ -34,7 +26,6 @@ export async function initUser(req: Request, res: Response) {
         uid: user.uid,
         displayName: user.displayName,
       }
-      console.log(`LOG | : initUser -> newUserStats`, newUserStats)
 
       admin
         .firestore()
