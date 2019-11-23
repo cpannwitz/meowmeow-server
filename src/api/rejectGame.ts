@@ -22,7 +22,7 @@ export async function rejectGame(req: Request, res: Response) {
 
     newLastActions.unshift({
       user: userId,
-      action: 'Game rejected or given up!',
+      action: 'Game rejected!',
       timestamp: getTimestamp(),
     })
 

@@ -195,13 +195,13 @@ export async function matchActionPut(req: Request, res: Response) {
         )
       }
     } else {
-      if (guestStats.uid === userId) {
+      if (userIsHost) {
         newBatch.set(
           gameRef,
           {
-            guestdeckLength: gameObject.guestdeckLength - 1,
+            hostdeckLength: gameObject.hostdeckLength - 1,
             lastActions: newLastActions,
-            whichTurn: hostStats.uid,
+            whichTurn: guestStats.uid,
           },
           { merge: true }
         )
@@ -209,9 +209,9 @@ export async function matchActionPut(req: Request, res: Response) {
         newBatch.set(
           gameRef,
           {
-            hostdeckLength: gameObject.hostdeckLength - 1,
+            guestdeckLength: gameObject.guestdeckLength - 1,
             lastActions: newLastActions,
-            whichTurn: guestStats.uid,
+            whichTurn: hostStats.uid,
           },
           { merge: true }
         )

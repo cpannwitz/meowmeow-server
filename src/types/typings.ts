@@ -27,7 +27,7 @@ export interface GameObject {
   guest: admin.firestore.DocumentReference
   hostName: string
   guestName: string
-  winner: string
+  winner?: string
   createdAt: string
   lastActions: GameLastAction[]
   preCondition: GamePreConditions

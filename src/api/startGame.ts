@@ -36,10 +36,6 @@ export async function startGame(req: Request, res: Response) {
     const shuffledDeck = shuffleArray(allCards)
     pile.push(shuffledDeck.pop())
 
-    // assign the first turn to one of the players
-    const coin = Math.floor(Math.random() * 2)
-    const whichTurn = coin === 0 ? hostId : guestId
-
     // give each player their cards
     for (let i = 0; i < gameConfig.cardsPerPlayer; ++i) {
       hostdeck.push(shuffledDeck.pop())
@@ -55,7 +51,6 @@ export async function startGame(req: Request, res: Response) {
     newBatch.set(
       gameRef,
       {
-        whichTurn: whichTurn,
         started: true,
         lastActions: newLastActions,
         hostdeckLength: hostdeck.length,

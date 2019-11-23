@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import admin from 'firebase-admin'
 import logger, { externalLogger } from '../services/logger'
-import { CardObject } from '../types/typings'
+import { CardObject, GameObject } from '../types/typings'
 import { sendNotification } from '../services/pushNotifications'
 import { fetchGameObject, fetchGameDeck, getTimestamp } from '../functions/firebase'
 import { shuffleArray } from '../functions/shuffleArray'
@@ -39,7 +39,7 @@ export async function matchActionDraw(req: Request, res: Response) {
     const newPileDeck: CardObject[] = [...pileDeck.pile]
 
     const penalty =
-      gameObject.preCondition.enabled && gameObject.preCondition.toDraw
+      gameObject.preCondition.enabled && gameObject.preCondition.toDraw > 0
         ? gameObject.preCondition.toDraw
         : 1
 
@@ -77,17 +77,24 @@ export async function matchActionDraw(req: Request, res: Response) {
     })
     // check if user draws due to precondition
     const userIsHost = gameObject.guest.id === userId ? false : true
-    // const penaltyActive = !penalty || penalty <= 1 ? false : true
-    const resultObject = {
-      guestdeckLength: !userIsHost ? gameObject.guestdeckLength + 1 : gameObject.guestdeckLength,
-      hostdeckLength: userIsHost ? gameObject.hostdeckLength + 1 : gameObject.hostdeckLength,
-      lastActions: newLastActions,
-      preCondition: {
+    let newPreCondition = gameObject.preCondition
+
+    if (gameObject.preCondition.enabled && gameObject.preCondition.toDraw > 0) {
+      newPreCondition = {
         enabled: false,
         suspended: false,
         toDraw: 0,
         newColor: '',
-      },
+      }
+    }
+
+    const resultObject = {
+      guestdeckLength: !userIsHost
+        ? gameObject.guestdeckLength + penalty
+        : gameObject.guestdeckLength,
+      hostdeckLength: userIsHost ? gameObject.hostdeckLength + penalty : gameObject.hostdeckLength,
+      lastActions: newLastActions,
+      preCondition: newPreCondition,
       whichTurn: userIsHost ? gameObject.guest.id : gameObject.host.id,
     }
 
