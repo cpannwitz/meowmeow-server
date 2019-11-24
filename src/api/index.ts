@@ -7,7 +7,7 @@ import { rejectGame } from './rejectGame'
 import { matchActionDraw } from './matchActionDraw'
 import { matchActionPut } from './matchActionPut'
 import { matchActionTakeSuspension } from './matchActionTakeSuspension'
-import { authHandler } from '../middlewares/auth/autthHandler'
+import { authHandler } from '../middlewares/auth/authHandler'
 import { testNotifications } from './testNotifications'
 
 const router = Router()
