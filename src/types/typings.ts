@@ -44,3 +44,9 @@ export interface CardObject {
   name: string
   value: string
 }
+
+export interface DBAction<T = any> {
+  ref: admin.firestore.DocumentReference
+  data: T
+  merge?: boolean
+}
