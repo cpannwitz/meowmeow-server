@@ -55,9 +55,9 @@ export async function matchActionPut(req: Request, res: Response, next: NextFunc
     // find card in userdeck
     const positionInUserDeck = newUserDeck.findIndex(element => element.name === card.name)
     // splice that one
-    const poppedCard = newUserDeck.splice(positionInUserDeck, 1)[0]
-    // add poppedcard to pile
-    newPileDeck.unshift(poppedCard)
+    const userCard = newUserDeck.splice(positionInUserDeck, 1)[0]
+    // add userCard to pile
+    newPileDeck.unshift(userCard)
 
     // ! handle precondition handling
     const preconditionToApply: GamePreConditions = {
@@ -69,45 +69,42 @@ export async function matchActionPut(req: Request, res: Response, next: NextFunc
     // handle removal of preConditions
     if (gameObject.preCondition.enabled) {
       // handle ace's
-      if (gameObject.preCondition.suspended === true && poppedCard.value === 'ace') {
+      if (gameObject.preCondition.suspended === true && userCard.value === 'ace') {
         preconditionToApply.enabled = true
         preconditionToApply.suspended = true
       }
       // handle jacks
-      if (
-        gameObject.preCondition.newColor &&
-        poppedCard.color === gameObject.preCondition.newColor
-      ) {
+      if (gameObject.preCondition.newColor && userCard.color === gameObject.preCondition.newColor) {
         preconditionToApply.enabled = false
         preconditionToApply.newColor = ''
       }
       // handle 7's
-      if (gameObject.preCondition.toDraw > 0 && poppedCard.value === '7') {
+      if (gameObject.preCondition.toDraw > 0 && userCard.value === '7') {
         preconditionToApply.enabled = true
         preconditionToApply.toDraw = gameObject.preCondition.toDraw + 2
       }
     } else {
-      // handle application of preConditions
-      // handle ace's
-      if (poppedCard.value === 'ace') {
-        preconditionToApply.enabled = true
-        preconditionToApply.suspended = true
-      }
-      // handle jacks
-      if (poppedCard.value === 'jack' && jackWish) {
-        preconditionToApply.enabled = true
-        preconditionToApply.newColor = jackWish
-      }
       // handle 7's
-      if (poppedCard.value === '7') {
+      if (userCard.value === '7') {
         preconditionToApply.enabled = true
         preconditionToApply.toDraw = 2
       }
     }
+    // handle application of preConditions
+    // handle ace's
+    if (userCard.value === 'ace') {
+      preconditionToApply.enabled = true
+      preconditionToApply.suspended = true
+    }
+    // handle jacks
+    if (userCard.value === 'jack' && jackWish) {
+      preconditionToApply.enabled = true
+      preconditionToApply.newColor = jackWish
+    }
 
     newLastActions.unshift({
       user: userId,
-      action: `${poppedCard.value} of ${poppedCard.color}s was played! `,
+      action: `${userCard.value} of ${userCard.color}s was played! `,
       timestamp: getTimestamp(),
     })
 

@@ -20,8 +20,10 @@ export function validateCardAction(
   }
   // handle jacks
   if (card.value === 'jack') {
-    // jack can be on everything else, except jacks
+    // jack can be on everything else, except jacks with active wishcolor
     if (pileCard.value !== 'jack') {
+      return true
+    } else if (pileCard.value === 'jack' && preCondition.enabled === false) {
       return true
     } else {
       return false
