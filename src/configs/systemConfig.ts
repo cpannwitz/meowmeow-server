@@ -24,6 +24,7 @@ const systemConfig = {
   environment: ENVIRONMENT,
   port: PORT,
   globalTimeout: '60s',
+  clientUrl: 'https://meowmeow.rocks',
   fbServiceAccount: GSA,
   pushNotificationKey: PUSHNOTIFICATION_KEY,
   rollbarToken: ROLLBAR_TOKEN,

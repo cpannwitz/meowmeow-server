@@ -2,8 +2,7 @@ import admin from 'firebase-admin'
 import logger from './logger'
 import { PushNotificationsCredentials } from '../types/typings'
 import gameConfig from '../configs/gameConfig'
-
-// * MESSAGES
+import systemConfig from '../configs/systemConfig'
 
 const messages: { [key: string]: admin.messaging.MessagingPayload } = {
   newAction: {
@@ -12,6 +11,8 @@ const messages: { [key: string]: admin.messaging.MessagingPayload } = {
       body: 'New actions happened!',
       color: '#003366',
       icon: 'https://image.ibb.co/jMfs06/icon_192x192.png',
+      //eslint-disable-next-line
+      click_action: systemConfig.clientUrl,
     },
   },
 }
