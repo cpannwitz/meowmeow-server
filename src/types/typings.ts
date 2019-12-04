@@ -21,6 +21,12 @@ export interface GamePreConditions {
   newColor: string
 }
 
+export interface PushNotificationsCredentials {
+  token: string
+  user: string
+  lastUsed: string
+}
+
 export interface GameObject {
   gameId: string
   host: admin.firestore.DocumentReference
